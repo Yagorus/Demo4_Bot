@@ -8,7 +8,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import psycopg2
-from config import API_KEY, BOT_TOKEN as bot_token
+from config import API_KEY, BOT_TOKEN
 
 
 conn = psycopg2.connect(host="localhost", port=5432, database="bot", user="postgres", password="123")
@@ -16,11 +16,11 @@ cur = conn.cursor()
 print("Database opened successfully")
 
 #API_KEY = getenv("API_KEY")
-#bot_token = getenv("BOT_TOKEN")
+#BOT_TOKEN = getenv("BOT_TOKEN")
 #if not bot_token:
 #    exit("Error: no token provided")
 
-bot = Bot(token=bot_token, parse_mode=types.ParseMode.HTML)
+bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot, storage=MemoryStorage())
 logging.basicConfig(level=logging.INFO)
 api_link_ria = 'https://developers.ria.com/auto/search?api_key=' + API_KEY + "&category_id=1"
