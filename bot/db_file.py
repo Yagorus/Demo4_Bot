@@ -1,3 +1,4 @@
+'''
 import psycopg2
 
 
@@ -5,7 +6,7 @@ conn = psycopg2.connect(host="localhost", port=5432, database="bot", user="postg
 cur = conn.cursor()
 print("Database opened successfully")
 
-'''
+
 class SQLighter:
 
     def __init__(self, database):

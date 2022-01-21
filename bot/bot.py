@@ -10,11 +10,11 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import psycopg2
 from config import API_KEY, BOT_TOKEN
 
-
+"""
 conn = psycopg2.connect(host="localhost", port=5432, database="bot", user="postgres", password="123")
 cur = conn.cursor()
 print("Database opened successfully")
-
+"""
 #API_KEY = getenv("API_KEY")
 #BOT_TOKEN = getenv("BOT_TOKEN")
 #if not bot_token:
