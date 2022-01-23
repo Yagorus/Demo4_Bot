@@ -65,7 +65,7 @@ async def start(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
     keyboard.add(*popular_cars)
     keyboard.add(*buttons_list)
-    send_mess = f"<b> Привет {message.from_user.first_name} {message.from_user.last_name} " \
+    send_mess = f"<b> Привет {message.from_user.first_name} " \
                 f"</b>!\nКакая марка тебя интересует?"
     await bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=keyboard)
     await ChooseCar.waiting_for_brand_name.set()
