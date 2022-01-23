@@ -37,7 +37,7 @@ resource "aws_ecs_service" "main" {
 
 
   network_configuration {
-    security_groups  = [aws_security_group.load_balancer_security_group.id]
+    security_groups  = [aws_security_group.security_group_port_i80.id]
     #have to be private
     subnets          = aws_subnet.public.*.id
     #! must be false if private subnets !
