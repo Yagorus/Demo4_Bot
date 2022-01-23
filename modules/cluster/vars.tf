@@ -46,7 +46,7 @@ variable "app_port" {
 variable "health_check_path" {
   default = "/"
 }
-
+#============================================#
 variable "fargate_cpu" {
   description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
   default     = "512"
@@ -56,7 +56,7 @@ variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
   default     = "1024"
 }
-
+#============================================#
 
 locals {
   app_image = format("%s:%s", var.ecr_repository_url, var.image_tag)
