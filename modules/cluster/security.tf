@@ -2,8 +2,8 @@ resource "aws_security_group" "security_group_port_i80" {
   vpc_id = aws_vpc.main.id
 
   ingress {
-    from_port        = 80
-    to_port          = 80
+    from_port        = var.app_port
+    to_port          = var.app_port
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
   }
@@ -15,6 +15,6 @@ resource "aws_security_group" "security_group_port_i80" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
   tags = {
-    Name        = "${var.app_name}-${environment}-sg"
+    Name        = "${var.app_name}-${var.environment}-sg"
   }
 }

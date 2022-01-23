@@ -37,8 +37,8 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   route  {
-    cidr_block  = "0.0.0.0/0"
-    gateway_id   = aws_internet_gateway.gw.id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
   }
   tags = {
     Name = "${var.app_name}-${var.environment}-public-rt"
@@ -76,8 +76,8 @@ resource "aws_nat_gateway" "gateway" {
 
 resource "aws_route_table" "private" {
   depends_on = [aws_nat_gateway.gateway]
-  count         =  var.az_count
-  vpc_id = aws_vpc.main.id
+  count  =      var.az_count
+  vpc_id =      aws_vpc.main.id
 
   route {
     cidr_block = "0.0.0.0/0"
