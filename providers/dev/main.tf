@@ -13,19 +13,19 @@ module "ecr" {
     environment = var.environment
     app_name = var.app_name
 }
-/*
 
-module "init-build" {
-    source = "../modules//init-build"
+module "initbuild" {
+    source = "../../modules/initbuild"
     aws_region = var.aws_region
     aws_profile = var.aws_profile
-    remote_state_bucket = var.bucket_name
+    #remote_state_bucket = var.bucket_name
     environment = var.environment
     app_name = var.app_name
-    working_dir = "${path.root}/../app"
+    working_dir = "../../app-test"
     image_tag = var.image_tag
 }
 
+/*
 module "ecs-cluster" {
     source = "../modules//cluster"
     aws_region = var.aws_region
