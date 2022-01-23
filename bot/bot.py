@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
 
-from sqlighter import SQLighter
+from db_file import SQLighter
 from config import API_KEY, BOT_TOKEN
 
 bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.HTML)
