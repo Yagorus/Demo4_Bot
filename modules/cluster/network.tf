@@ -43,7 +43,7 @@ resource "aws_route_table" "public" {
   tags = {
     Name = "${var.app_name}-${var.environment}-PublicRT"
   }
-  depends_on = [aws_internet_gateway.InternetGateway]
+  depends_on = [aws_internet_gateway.gw]
 }
 
 resource "aws_route_table_association" "routeTableAssociationPublicRoute" {
