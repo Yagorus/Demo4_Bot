@@ -1,0 +1,10 @@
+environment = "dev"
+app_name = "bot"
+aws_profile = "default"
+aws_account = "367668710117"
+aws_region = "eu-west-1"
+image_tag = "0.0.1"
+#repo_url = "https://github.com/Yagorus/Demo4_Bot"
+#branch_pattern = "^refs/heads/v2$"
+#git_trigger_event = "PUSH"
+app_count = 3
