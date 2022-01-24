@@ -4,7 +4,7 @@ data "template_file" "cb_bot" {
   vars = {
     app_image      = local.app_image
     app_port       = var.app_port
-    aws_region     = var.aws_region
+    #aws_region     = var.aws_region
     env            = var.environment
     app_name       = var.app_name
     image_tag      = var.image_tag
