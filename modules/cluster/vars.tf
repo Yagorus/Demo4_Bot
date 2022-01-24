@@ -10,7 +10,7 @@ variable "ecr_repository_url" { }
 variable "app_count" { }
 
 variable "taskdef_template" {
-  default = "cb_bot.json"
+  default = "cb_bot.json.tpl"
 }
 
 
