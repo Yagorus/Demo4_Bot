@@ -53,7 +53,7 @@ resource "aws_route_table_association" "routeTableAssociationPublicRoute" {
   route_table_id =element(aws_route_table.public.*.id, count.index)
 }
 
-
+/*
 resource "aws_eip" "gw" {
     depends_on = [aws_internet_gateway.gw] 
     count      =  var.az_count
@@ -95,3 +95,4 @@ resource "aws_route_table_association" "private" {
   subnet_id     = element(aws_subnet.private.*.id, count.index)
   route_table_id =element(aws_route_table.private.*.id, count.index)
 }
+*/

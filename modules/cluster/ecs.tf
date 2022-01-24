@@ -28,13 +28,15 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   {
     "name": "${var.app_name}-${var.environment}-container",
     "image": "${local.app_image}",
+    "essential": true,
     "memory": 512,
     "cpu": 256,
     "networkMode": "awsvpc",
     "portMappings": [
       {
         "containerPort": "${var.app_port}",
-        "hostPort": "${var.app_port}"
+        "hostPort": "${var.app_port}",
+        "protocol": "tcp"
       }
     ],
     "environment": [
@@ -51,6 +53,7 @@ EOT
   cpu                      = "256"
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
   task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
+
 }
 
 
