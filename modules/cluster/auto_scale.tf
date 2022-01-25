@@ -53,8 +53,8 @@ resource "aws_autoscaling_group" "autoscale" {
     depends_on                = [aws_launch_configuration.ecs_ec2_launch_config]
     vpc_zone_identifier       = [for subnet in aws_subnet.public : subnet.id]
     launch_configuration      = aws_launch_configuration.ecs_ec2_launch_config.name
-    target_group_arns = [aws_alb_target_group.target_group.arn]
-    protect_from_scale_in = false
+    target_group_arns         = [aws_alb_target_group.target_group.arn]
+    protect_from_scale_in     = false
     min_size                  = var.az_count
     max_size                  = var.az_count*3
     health_check_grace_period = 20

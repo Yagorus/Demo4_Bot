@@ -43,7 +43,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   family = "${var.app_name}-${var.environment}-task"
   requires_compatibilities = ["EC2"]
   #container_definitions    = data.template_file.cb_bot.rendered
-  container_definitions     = <<EOT
+  container_definitions     = jsonencode(
 [
   {
     "name": "${var.app_name}-${var.environment}-container",
@@ -51,23 +51,16 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
     "essential": true,
     "memory": 512,
     "cpu": 256,
-    "networkMode": "awsvpc",
+    
     "portMappings": [
       {
-        "containerPort": ${var.app_port},
-        "hostPort": ${var.app_port},
-        "protocol": "tcp"
-      }
-    ],
-    "environment": [
-      {
-        "name": "VERSION",
-        "value": "${var.image_tag}"
+        "containerPort": var.app_port,
+        "hostPort": var.app_port
       }
     ]
   }
-]
-EOT
+])
+#"networkMode": "awsvpc",
   network_mode             = "awsvpc"
   memory                   = "512"
   cpu                      = "256"
@@ -91,8 +84,6 @@ resource "aws_ecs_service" "main" {
     weight = 1
     base = 0
   }
-
-
   network_configuration {
     security_groups  = [aws_security_group.security_group_port_i80.id]
     #have to be private
