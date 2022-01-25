@@ -74,12 +74,19 @@ EOT
 
 
 resource "aws_ecs_service" "main" {
+  depends_on = [aws_alb_listener.listener, aws_iam_role.ecsTaskExecutionRole]
   name            = "${var.app_name}-${var.environment}-service"
   cluster         = aws_ecs_cluster.aws-ecs-cluster.id
   task_definition = aws_ecs_task_definition.aws-ecs-task.arn
   desired_count   = 2
-  capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
   launch_type     = "EC2"
+
+
+  capacity_provider_strategy {
+  capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
+  weight = 1
+  base = 0
+    }
 
 
   network_configuration {
@@ -94,5 +101,4 @@ resource "aws_ecs_service" "main" {
     container_name   = "${var.app_name}-${var.environment}-container"
     container_port   = var.app_port
   }
-  depends_on = [aws_alb_listener.listener, aws_iam_role.ecsTaskExecutionRole]
 }
