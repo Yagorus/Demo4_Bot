@@ -63,6 +63,13 @@ resource "aws_ecs_service" "main" {
     weight = 1
     base = 0
   }
+
+    network_configuration {
+    security_groups  = [aws_security_group.load_balancer_security_group.id]
+    subnets          = aws_subnet.public.*.id
+    assign_public_ip = true
+  }
+
   load_balancer {
     target_group_arn = aws_alb_target_group.target_group.arn
     container_name   = "${var.app_name}-${var.environment}-container"
