@@ -12,7 +12,6 @@ resource "aws_alb_target_group" "target_group" {
   name        = "${var.app_name}-${var.environment}-tg"
   port        = var.app_port
   protocol    = "HTTP"
-  target_type = "lambda"
   vpc_id      = aws_vpc.main.id
 
   health_check {
