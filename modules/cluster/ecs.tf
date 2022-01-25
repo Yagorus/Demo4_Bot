@@ -55,19 +55,13 @@ resource "aws_ecs_service" "main" {
   cluster         = aws_ecs_cluster.aws-ecs-cluster.id
   task_definition = aws_ecs_task_definition.aws-ecs-task.arn
   desired_count   = 2
+  deployment_minimum_healthy_percent = "90"
   #launch_type     = "EC2"
-
 
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
     weight = 1
     base = 0
-  }
-
-    network_configuration {
-    security_groups  = [aws_security_group.load_balancer_security_group.id]
-    subnets          = aws_subnet.public.*.id
-    assign_public_ip = true
   }
 
   load_balancer {

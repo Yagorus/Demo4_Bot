@@ -13,7 +13,6 @@ resource "aws_alb_target_group" "target_group" {
   port        = var.app_port
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
-
   health_check {
     healthy_threshold   = "3"
     interval            = "5"
@@ -28,11 +27,11 @@ resource "aws_alb_target_group" "target_group" {
   }
 }
 resource "aws_alb_listener" "listener" {
-  load_balancer_arn = aws_alb.application_load_balancer.id
+  load_balancer_arn = aws_alb.application_load_balancer.arn
   port              = var.app_port
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.target_group.id
+    target_group_arn = aws_alb_target_group.target_group.arn
   }
 }
