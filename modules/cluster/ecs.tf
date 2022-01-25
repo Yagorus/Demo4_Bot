@@ -24,7 +24,8 @@ resource "aws_ecs_cluster" "aws-ecs-cluster" {
 
 resource "aws_ecs_task_definition" "aws-ecs-task" {
   family = "${var.app_name}-${var.environment}-task"
-  requires_compatibilities = ["EC2"]
+  #execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
+  #task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
   #container_definitions    = data.template_file.cb_bot.rendered
   container_definitions     = jsonencode(
 [
@@ -43,10 +44,6 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
     ]
   }
 ])
-  memory                   = "512"
-  cpu                      = "256"
-  execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
-  task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
 
 }
 
