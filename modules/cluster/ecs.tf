@@ -13,7 +13,8 @@ data "template_file" "cb_bot" {
 */
 resource "aws_ecs_cluster" "aws-ecs-cluster" {
   depends_on = [
-    aws_ecs_capacity_provider.capacity_provider
+    aws_ecs_capacity_provider.capacity_provider,
+    aws_autoscaling_group.autoscale
   ]
   name = "${var.app_name}-${var.environment}-cluster"
   capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
@@ -30,13 +31,13 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   container_definitions     = jsonencode(
 [
   {
-    "name": "${var.app_name}-${var.environment}-container",
-    "image": "${local.app_image}",
-    "essential": true,
-    "memory": 512,
-    "cpu": 256,
+    name = "${var.app_name}-${var.environment}-container"
+    image = "${local.app_image}"
+    memory = 512
+    cpu = 256
+    essential = true
     
-    "portMappings": [
+    portMappings = [
       {
         "containerPort": var.app_port,
         "hostPort": var.app_port
