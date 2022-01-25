@@ -3,7 +3,7 @@ resource "aws_ecs_capacity_provider" "capacity_provider" {
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.autoscale.arn
-    managed_termination_protection = "DISABLE"
+    managed_termination_protection = "DISABLED"
 
     managed_scaling {
       maximum_scaling_step_size = 4
@@ -79,14 +79,14 @@ resource "aws_ecs_service" "main" {
   cluster         = aws_ecs_cluster.aws-ecs-cluster.id
   task_definition = aws_ecs_task_definition.aws-ecs-task.arn
   desired_count   = 2
-  launch_type     = "EC2"
+  #launch_type     = "EC2"
 
 
   capacity_provider_strategy {
-  capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
-  weight = 1
-  base = 0
-    }
+    capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
+    weight = 1
+    base = 0
+  }
 
 
   network_configuration {
