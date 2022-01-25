@@ -35,7 +35,7 @@ resource "aws_ecs_cluster" "aws-ecs-cluster" {
   name = "${var.app_name}-${var.environment}-cluster"
   capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
   tags = {
-    Name = "${var.app_name}-${var.environment}-ecs"
+    Name = "${var.app_name}-${var.environment}-cluster"
   }
 }
 

@@ -1,7 +1,6 @@
 resource "aws_alb" "application_load_balancer" {
   name               = "${var.app_name}-${var.environment}-alb"
   internal           = false
-  load_balancer_type = "application"
   subnets            = aws_subnet.public.*.id
   security_groups    = [aws_security_group.security_group_port_i80.id]
   tags = {
@@ -13,12 +12,12 @@ resource "aws_alb_target_group" "target_group" {
   name        = "${var.app_name}-${var.environment}-tg"
   port        = var.app_port
   protocol    = "HTTP"
-  target_type = "ip"
+  #target_type = "ip"
   vpc_id      = aws_vpc.main.id
 
   health_check {
     healthy_threshold   = "3"
-    interval            = "300"
+    interval            = "5"
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = "3"
