@@ -1,3 +1,19 @@
+resource "aws_ecs_capacity_provider" "capacity_provider" {
+  name = "${var.app_name}-${var.environment}-capacity_provider"
+
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = aws_autoscaling_group.autoscale.arn
+    managed_termination_protection = "DISABLE"
+
+    managed_scaling {
+      maximum_scaling_step_size = 4
+      minimum_scaling_step_size = 2
+      status                    = "ENABLED"
+      target_capacity           = 10
+    }
+  }
+}
+
 
 /*
 data "template_file" "cb_bot" {
@@ -34,8 +50,8 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
     "networkMode": "awsvpc",
     "portMappings": [
       {
-        "containerPort": "${var.app_port}",
-        "hostPort": "${var.app_port}",
+        "containerPort": ${var.app_port},
+        "hostPort": ${var.app_port},
         "protocol": "tcp"
       }
     ],
@@ -62,6 +78,7 @@ resource "aws_ecs_service" "main" {
   cluster         = aws_ecs_cluster.aws-ecs-cluster.id
   task_definition = aws_ecs_task_definition.aws-ecs-task.arn
   desired_count   = 2
+  capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
   launch_type     = "EC2"
 
 

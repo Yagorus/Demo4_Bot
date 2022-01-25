@@ -36,25 +36,19 @@ resource "aws_autoscaling_attachment" "name" {
 }
 */
 
-resource "aws_launch_configuration" "ecs_launch_config" {
+resource "aws_launch_configuration" "ecs_ec2_launch_config" {
     image_id             = data.aws_ami.latest_amazon_linux.id
     iam_instance_profile = aws_iam_instance_profile.ecs_agent.name
     security_groups      = [aws_security_group.security_group_port_i80.id]
-    user_data            = "#!/bin/bash\necho ECS_CLUSTER=my-cluster >> /etc/ecs/ecs.config"
+    user_data            = "#!/bin/bash\necho ECS_CLUSTER=${var.app_name}-${var.environment}-cluster >> /etc/ecs/ecs.config"
     instance_type        = "t2.micro"
-
-    tag {
-    key                 = "Name"
-    value               = "${var.app_name}-${var.environment}-ec2"
-    propagate_at_launch = true
-  }
 }
 
-resource "aws_autoscaling_group" "failure_analysis_ecs_asg" {
-    depends_on                = [aws_launch_configuration.launch]
+resource "aws_autoscaling_group" "autoscale" {
+    depends_on                = [aws_launch_configuration.ecs_ec2_launch_config]
     name                      = "${var.app_name}-${var.environment}-auto-asg"
     vpc_zone_identifier       = [for subnet in aws_subnet.public : subnet.id]
-    launch_configuration      = aws_launch_configuration.ecs_launch_config.name
+    launch_configuration      = aws_launch_configuration.ecs_ec2_launch_config.name
 
     desired_capacity          = 2
     min_size                  = 1
