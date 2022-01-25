@@ -29,7 +29,11 @@ data "template_file" "cb_bot" {
 }
 */
 resource "aws_ecs_cluster" "aws-ecs-cluster" {
+  depends_on = [
+    aws_ecs_capacity_provider.capacity_provider
+  ]
   name = "${var.app_name}-${var.environment}-cluster"
+  capacity_providers = [aws_ecs_capacity_provider.capacity_provider.name]
   tags = {
     Name = "${var.app_name}-${var.environment}-ecs"
   }
