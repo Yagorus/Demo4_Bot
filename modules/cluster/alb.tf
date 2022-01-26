@@ -16,7 +16,7 @@ resource "aws_alb_target_group" "target_group" {
   
   health_check {
     healthy_threshold   = "3"
-    interval            = "5"
+    interval            = "30"
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = "3"
@@ -34,5 +34,21 @@ resource "aws_alb_listener" "listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_alb_target_group.target_group.arn
+  }
+}
+
+resource "aws_alb_listener_rule" "listener_rule" {
+  depends_on   = [aws_alb_target_group.target_group,
+                  aws_alb_listener.listener]  
+  listener_arn = aws_alb_listener.listener.arn  
+
+  action {    
+    type             = "forward"    
+    target_group_arn = aws_alb_target_group.target_group.arn  
+  }   
+  condition {
+    path_pattern {
+      values = ["/"]
+    }        
   }
 }
