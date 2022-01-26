@@ -1,10 +1,8 @@
-
-/*
 module "s3_terraform_state" {
   source = "./modules/s3"
   bucket_name = var.bucket_name
 }
-*/
+
 module "ecr" {
     source = "../../modules/ecr"
     aws_region = var.aws_region
@@ -21,7 +19,7 @@ module "initbuild" {
     #remote_state_bucket = var.bucket_name
     environment = var.environment
     app_name = var.app_name
-    working_dir = "../../bot"
+    working_dir = "../../app-test"
     image_tag = var.image_tag
 }
 

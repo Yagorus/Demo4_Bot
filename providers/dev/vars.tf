@@ -2,7 +2,7 @@
 variable "bucket_name" {
   type        = string
   description = "S3 Bucket name"
-  default     = "bot-dev-eu-west-1"
+  default     = "bot-dev-eu-west-1-bucket"
 }
 #
 variable "environment" { }
