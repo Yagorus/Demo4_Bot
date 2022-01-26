@@ -9,19 +9,21 @@ resource "aws_alb" "application_load_balancer" {
 }
 
 resource "aws_alb_target_group" "target_group" {
+  depends_on = [ aws_alb.application_load_balancer ]
   name        = "${var.app_name}-${var.environment}-tg"
   port        = var.app_port
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   
   health_check {
-    healthy_threshold   = "3"
-    interval            = "30"
-    protocol            = "HTTP"
-    matcher             = "200"
-    timeout             = "3"
+    healthy_threshold   = 3
+    interval            = 30
+    protocol            = HTTP
+    port               = 80
+    matcher             = 200
+    timeout             = 3
     path                = "/"
-    unhealthy_threshold = "2"
+    unhealthy_threshold = 2
   }
   tags = {
     Name   = "${var.app_name}-${var.environment}-alb-tg"
