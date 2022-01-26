@@ -13,6 +13,7 @@ resource "aws_alb_target_group" "target_group" {
   port        = var.app_port
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
+  
   health_check {
     healthy_threshold   = "3"
     interval            = "5"

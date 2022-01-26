@@ -11,7 +11,7 @@ data "template_file" "cb_bot" {
   }
 }
 */
-resource "aws_ecs_cluster" "aws-ecs-cluster" {
+resource "aws_ecs_cluster" "aws_ecs_cluster" {
   depends_on = [
     aws_ecs_capacity_provider.capacity_provider,
     aws_autoscaling_group.autoscale
@@ -23,7 +23,7 @@ resource "aws_ecs_cluster" "aws-ecs-cluster" {
   }
 }
 
-resource "aws_ecs_task_definition" "aws-ecs-task" {
+resource "aws_ecs_task_definition" "aws_ecs_task" {
   family = "${var.app_name}-${var.environment}-task"
   #execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
   #task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
@@ -52,22 +52,22 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
 resource "aws_ecs_service" "main" {
   depends_on = [aws_alb_listener.listener, aws_iam_role.ecsTaskExecutionRole]
   name            = "${var.app_name}-${var.environment}-service"
-  cluster         = aws_ecs_cluster.aws-ecs-cluster.id
-  task_definition = aws_ecs_task_definition.aws-ecs-task.arn
+  cluster         = aws_ecs_cluster.aws_ecs_cluster.id
+  task_definition = aws_ecs_task_definition.aws_ecs_task.arn
   desired_count   = 2
   deployment_minimum_healthy_percent = "90"
-  #launch_type     = "EC2"
 
-  capacity_provider_strategy {
-    capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
-    weight = 1
-    base = 0
-  }
 
   load_balancer {
     target_group_arn = aws_alb_target_group.target_group.arn
     container_name   = "${var.app_name}-${var.environment}-container"
     container_port   = var.app_port
+  }
+
+  capacity_provider_strategy {
+    capacity_provider = aws_ecs_capacity_provider.capacity_provider.name
+    weight = 1
+    base = 0
   }
 }
 
