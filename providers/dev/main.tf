@@ -21,7 +21,7 @@ module "initbuild" {
     #remote_state_bucket = var.bucket_name
     environment = var.environment
     app_name = var.app_name
-    working_dir = "../../app-test"
+    working_dir = "../../bot"
     image_tag = var.image_tag
 }
 
