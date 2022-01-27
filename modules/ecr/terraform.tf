@@ -4,10 +4,5 @@ provider "aws" {
 }
 
 terraform {
-  backend "s3" {
-    encrypt = true
-    bucket  = var.bucket_name
-    region  = var.aws_region
-    key     = "state"
-  }
+  backend "s3" { }
 }
