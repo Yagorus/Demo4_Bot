@@ -1,14 +1,26 @@
 
-provider "aws" {
-    region = var.aws_region
-    profile = var.aws_profile
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket = var.bucket_name
+  
+  versioning {
+    enabled = true
+  }
+
+  lifecycle {
+    prevent_destroy = true
+   ignore_changes = [tags,tags_all]
+  }
+
+  tags = {
+    Name = var.bucket_description
+  }
 }
 
-terraform {
-  backend "s3" {
-    encrypt = true
-    bucket  = "bot-dev-s3-bucket"
-    region  = "eu-central-1"
-    key     = "terraform.tfstate"
-  }
+resource "aws_s3_bucket_public_access_block" "example" {
+  bucket = aws_s3_bucket.s3_bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+  ignore_public_acls = true
+  restrict_public_buckets = true
 }
