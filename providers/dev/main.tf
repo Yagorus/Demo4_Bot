@@ -1,4 +1,4 @@
-module "s3_terraform_state" {
+module "s3-init" {
   source = "../../modules/s3"
   bucket_name = var.bucket_name
 }
@@ -12,7 +12,7 @@ module "ecr" {
     app_name = var.app_name
 }
 
-module "initbuild" {
+module "init-build" {
     source = "../../modules/initbuild"
     aws_region = var.aws_region
     aws_profile = var.aws_profile
@@ -37,7 +37,10 @@ module "ecs-cluster" {
     app_count = var.app_count
 }
 
-
+module "s3" {
+  source = "../../modules/s3"
+  bucket_name = var.bucket_name
+}
 
 /*
 module "codebuild" {

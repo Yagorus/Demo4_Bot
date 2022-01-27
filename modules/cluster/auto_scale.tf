@@ -16,7 +16,7 @@ resource "aws_autoscaling_group" "autoscale" {
     vpc_zone_identifier       = [for subnet in aws_subnet.public : subnet.id]
     launch_configuration      = aws_launch_configuration.ecs_ec2_launch_config.name
     target_group_arns         = [aws_alb_target_group.target_group.arn]
-
+    suspended_processes       = ["Launch", "Terminate", "HealthCheck", "ReplaceUnhealthy", "AZRebalance", "AlarmNotification", "ScheduledActions", "AddToLoadBalancer"]
     min_size                  = var.az_count
     max_size                  = var.az_count*3
     
