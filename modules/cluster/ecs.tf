@@ -72,7 +72,7 @@ resource "aws_ecs_service" "main" {
 }
 
 resource "aws_ecs_capacity_provider" "capacity_provider" {
-  name = "${var.app_name}-${var.environment}-capacity_provider"
+  name = "${var.app_name}-${var.environment}-capacity-provider"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.autoscale.arn
