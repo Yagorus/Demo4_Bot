@@ -6,7 +6,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     encrypt = true
-    bucket  = "bot-dev-s3"
+    bucket  = "bot-dev-s3-bucket"
     region  = "eu-central-1"
     key     = "state"
   }
