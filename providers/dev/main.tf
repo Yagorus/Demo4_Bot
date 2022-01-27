@@ -1,5 +1,5 @@
-module "s3-init" {
-  source = "../../modules/s3"
+module "s3init" {
+  source = "../../modules/s3init"
   bucket_name = var.bucket_name
 }
 
@@ -39,7 +39,8 @@ module "ecs-cluster" {
 
 module "s3" {
   source = "../../modules/s3"
-  bucket_name = var.bucket_name
+  bucket_name = module.s3init.bucket_name
+  bucket_arn  = module.s3init.bucket_arn
 }
 
 /*
