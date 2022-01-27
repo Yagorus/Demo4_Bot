@@ -2,8 +2,7 @@ variable "aws_region" { }
 variable "aws_profile" { }
 variable "environment" { }
 variable "app_name" { }
-
-#variable "remote_state_bucket" {}
+variable "bucket_name" {}
 
 
 locals {

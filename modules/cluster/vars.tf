@@ -2,7 +2,7 @@
 /*==========global vars==========*/
 variable "aws_region" { }
 variable "aws_profile" { }
-#variable "remote_state_bucket" {}
+variable "bucket_name" {}
 variable "environment" { }
 variable "app_name" { }
 variable "image_tag" { }
@@ -32,34 +32,6 @@ variable "app_port" {
 variable "health_check_path" {
   default = "/"
 }
-#============================================#
-/*
-variable "fargate_cpu" {
-  description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
-  default     = "512"
-}
-
-variable "fargate_memory" {
-  description = "Fargate instance memory to provision (in MiB)"
-  default     = "1024"
-}
-variable "ecs_task_execution_role_name" {
-  description = "ECS task execution role name"
-  default = "TaskExecutionRole"
-}
-
-variable "ecs_task_role_name" {
-  description = "ECS task role name"
-  default = "TaskRole"
-}
-
-variable "ecs_auto_scale_role_name" {
-  description = "ECS auto scale role Name"
-  default = "AutoScaleRole"
-}
-*/
-#============================================#
-
 locals {
   app_image = format("%s:%s", var.ecr_repository_url, var.image_tag)
 }
