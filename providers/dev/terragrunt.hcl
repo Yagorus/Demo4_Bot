@@ -12,12 +12,12 @@ buildspec_path = "providers/dev"
 }
 
 inputs = {
-    environment = local.env
-    app_name = local.app
+    environment = local.environment
+    app_name = local.apapp_namep
     aws_profile = local.aws_profile
     aws_account = local.aws_account
     aws_region = local.aws_region
-    image_tag = local.image_version
+    image_tag = local.image_tag
     az_count = local.az_count
     #branch_githook = local.branch_githook
     buildspec_path = local.buildspec_path
