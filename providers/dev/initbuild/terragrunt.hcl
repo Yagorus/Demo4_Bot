@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../modules//init-build"
+  source = "../../../modules//initbuild"
 }
 
 include {
