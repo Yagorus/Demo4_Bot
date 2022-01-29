@@ -1,14 +1,10 @@
 terraform {
-  source = "../../..//modules/cluster"
+  source = "../../../modules//cluster"
 }
 
 dependencies {
     paths = ["../initbuild"]
 }
-
-dependency "initbuild" {
-    config_path = "../initbuild"      
-  }
 
 
 dependency "ecr" {
