@@ -6,6 +6,7 @@ variable "bucket_name" {}
 variable "buildspec_path" {}
 variable "branch_githook" {}
 variable "github_path" {}
+variable "token_git" { }
 
 #var from outputs ecs module
 variable "subnets" {

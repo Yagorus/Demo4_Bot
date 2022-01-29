@@ -7,12 +7,12 @@ aws_region          = "eu-central-1"
 image_tag           = "0.0.1"
 az_count            = 2
 #branch_githook     = "terragrunt"
+token_git           = var.token_git
 buildspec_path      = "providers/dev"
 }
 
 inputs = {
     bucket_name     = format("s3-%s-%s", local.app_name, local.environment)
-
     environment     = local.environment
     app_name        = local.app_name
     aws_profile     = local.aws_profile
@@ -21,6 +21,7 @@ inputs = {
     image_tag       = local.image_tag
     az_count        = local.az_count
     #branch_githook = local.branch_githook
+    token_git       = local.token_git
     buildspec_path  = local.buildspec_path
 }
 
