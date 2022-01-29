@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../modules/cluster"
+  source = "../../..//modules/cluster"
 }
 
 dependencies {
