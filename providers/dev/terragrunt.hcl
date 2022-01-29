@@ -22,7 +22,7 @@ inputs = {
     #branch_githook = local.branch_githook
     buildspec_path = local.buildspec_path
 }
-/*
+
 remote_state {
     backend = "s3" 
 
@@ -33,4 +33,3 @@ remote_state {
         region = local.aws_region
   }
 }
-*/
