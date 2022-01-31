@@ -1,5 +1,5 @@
 resource "aws_iam_role" "code_build_role" {
-  name = "example"
+  name = "${var.app_name}-${var.environment}-role-codebuild"
 
   assume_role_policy = <<EOF
 {
@@ -19,7 +19,7 @@ EOF
 
 
 resource "aws_security_group" "codebuild_sg" {
-  name        = "allow_vpc_connectivity"
+  name        ="${var.app_name}-${var.environment}-sg-codebuild"
   description = "Allow Codebuild connectivity to all the resources within our VPC"
   vpc_id      = var.vpc_id
 
@@ -27,13 +27,13 @@ resource "aws_security_group" "codebuild_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_blocks]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_blocks]
   }
 }

@@ -11,6 +11,7 @@ git_trigger        = "PUSH"
 git_pattern_branch  = "^refs/heads/terragrunt$"
 #token_git          = var.token_git
 buildspec_path      = "providers/dev"
+buildspec_file      = "buildspec.yml"
 working_dir         =  "../../app-test"
 }
 
@@ -29,6 +30,7 @@ inputs = {
     #token_git       = local.token_git
     buildspec_path  = local.buildspec_path
     working_dir     = local.working_dir
+    buildspec_file  = local.buildspec_file
 }
 
 remote_state {

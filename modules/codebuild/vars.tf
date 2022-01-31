@@ -8,6 +8,7 @@ variable "github_path_url" {}
 variable "git_trigger" { }
 #variable "token_git" {  }
 variable "git_pattern_branch" { }
+variable "buildspec_file" { }
 
 #vars from outputs ecs module
 variable "subnets" {
@@ -26,4 +27,9 @@ variable "vpc_id" {
   type        = string
   default     = null
   description = "The VPC ID that CodeBuild uses"
+}
+
+variable "cidr_blocks"{
+  description = "Cidr block for codebuild security group "
+  default = "0.0.0.0/0"
 }
