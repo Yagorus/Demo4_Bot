@@ -12,7 +12,7 @@ buildspec_path      = "providers/dev"
 }
 
 inputs = {
-    bucket_name     = format("s3-%s-%s", local.app_name, local.environment)
+    bucket_name     = format("%s-%s-s3", local.app_name, local.environment)
     environment     = local.environment
     app_name        = local.app_name
     aws_profile     = local.aws_profile
@@ -30,7 +30,7 @@ remote_state {
 
     config = {
         encrypt = true
-        bucket = format("s3-%s-%s", local.app_name, local.environment)
+        bucket = format("%s-%s-s3", local.app_name, local.environment)
         key =  format("%s/terraform.tfstate", path_relative_to_include())
         region  = local.aws_region
         profile = local.aws_profile
