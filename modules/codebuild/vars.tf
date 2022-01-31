@@ -4,10 +4,9 @@ variable "environment" { }
 variable "app_name" { }
 variable "bucket_name" {}
 variable "buildspec_path" {}
-variable "branch_githook" {}
 variable "github_path_url" {}
 variable "git_trigger" { }
-variable "token_git" { }
+#variable "token_git" {  }
 variable "git_pattern_branch" { }
 
 #vars from outputs ecs module

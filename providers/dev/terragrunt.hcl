@@ -25,6 +25,7 @@ inputs = {
     image_tag       = local.image_tag
     app_count       = local.app_count
     git_trigger     = local.git_trigger
+    github_path_url = local.github_path_url
     #token_git       = local.token_git
     buildspec_path  = local.buildspec_path
     working_dir     = local.working_dir
