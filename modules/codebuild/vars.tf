@@ -8,7 +8,7 @@ variable "branch_githook" {}
 variable "github_path" {}
 variable "token_git" { }
 
-#var from outputs ecs module
+#vars from outputs ecs module
 variable "subnets" {
   type        = list(string)
   default     = null
