@@ -27,4 +27,10 @@ resource "aws_autoscaling_group" "autoscale" {
     lifecycle {
     create_before_destroy = true
      }
+
+     tag {
+    key                 = "Name"
+    value               = "${var.app_name}-${var.environment}-ec2-ecs"
+    propagate_at_launch = true
+  }
 }
