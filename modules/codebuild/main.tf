@@ -5,7 +5,7 @@ resource "aws_codebuild_source_credential" "github_token" {
 }
 
 resource "aws_codebuild_project" "project" {
-  depends_on = []
+  depends_on = [aws_codebuild_source_credential.github_token]
   name = "${var.app_name}-${var.environment}-code-build-project"
   description = "test"
   build_timeout = "10"
@@ -34,13 +34,31 @@ resource "aws_codebuild_project" "project" {
   source {
     buildspec = var.buildspec_path
     type = "GITHUB"
-    location = var.github_path
+    location = var.github_path_url
     git_clone_depth = 1
     report_build_status = "true"
   }
+
 vpc_config {
     vpc_id = var.vpc_id
     subnets = var.subnets
     security_group_ids = [ aws_security_group.codebuild_sg.id ]
+  }
+}
+
+resource "aws_codebuild_webhook" "develop_webhook" {
+  project_name = aws_codebuild_project.project.name
+
+  # https://docs.aws.amazon.com/codebuild/latest/APIReference/API_WebhookFilter.html
+  filter_group {
+    filter {
+      type = "EVENT"
+      pattern = var.git_trigger
+    }
+
+    filter {
+      type = "HEAD_REF"
+      pattern = var.git_pattern_branch
+    }
   }
 }

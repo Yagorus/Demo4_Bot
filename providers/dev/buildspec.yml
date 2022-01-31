@@ -5,7 +5,7 @@ env:
     CI: "true"
     REPOSITORY_REGION: "eu-central-1"
     ENV: "dev"
-    APP_NAME: "telebot"
+    APP_NAME: "bot"
     NAME_CONTAINER: "main"
     TERRAFORM_VERSION: "1.1.4"
     TERRAGRUNT_VERSION: "0.36.0"
