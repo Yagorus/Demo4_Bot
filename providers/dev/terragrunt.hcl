@@ -9,6 +9,7 @@ app_count            = 2
 #branch_githook     = "terragrunt"
 #token_git           = var.token_git
 buildspec_path      = "providers/dev"
+working_dir         =  "../../app-test"
 }
 
 inputs = {
@@ -23,6 +24,7 @@ inputs = {
     #branch_githook = local.branch_githook
     #token_git       = local.token_git
     buildspec_path  = local.buildspec_path
+    working_dir     = local.working_dir
 }
 
 remote_state {
