@@ -8,8 +8,8 @@ include {
 }
 
 locals {
-  #secrets = "../../../modules/codebuild/secrets.hcl"
-  secrets = read_terragrunt_config(find_in_parent_folders("secrets.hcl"))
+  secrets = "../../../modules/codebuild/secrets.hcl"
+  #secrets = read_terragrunt_config(find_in_parent_folders("secrets.hcl"))
 }
 
 
