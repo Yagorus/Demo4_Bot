@@ -22,13 +22,11 @@ dependency "cluster" {
   }
 }
 
-  inputs = merge(
-  local.secrets.inputs,
-  {
+  inputs ={
+    token_git = local.secrets.inputs.token_git
     vpc_id = dependency.cluster.outputs.vpc_id
-        subnets = dependency.cluster.outputs.subnets
-  }
-)
+    subnets = dependency.cluster.outputs.subnets
+  } 
   
 dependency "ecr" {
     config_path = "../ecr"
