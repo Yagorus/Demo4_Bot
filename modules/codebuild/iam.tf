@@ -53,7 +53,7 @@ resource "aws_iam_role_policy_attachment" "ec2_full_access" {
 # Also add policy to read all resources - codebuild need to read instance profile
 resource "aws_iam_role_policy" "role_policy" {
   role = aws_iam_role.codebuild_role.name
-  name = "codebuild-policy-${var.app}-${var.env}"
+  name = "${var.app_name}-${var.environment}-codebuild-policy"
 
   policy = <<POLICY
 {
