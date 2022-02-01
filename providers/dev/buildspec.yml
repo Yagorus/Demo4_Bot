@@ -8,7 +8,7 @@ env:
     APP_NAME: "bot"
     NAME_CONTAINER: "main"
     TERRAFORM_VERSION: "1.1.4"
-    TERRAGRUNT_VERSION: "0.36.0"
+    TERRAGRUNT_VERSION: "0.36.1"
 
 phases:
   pre_build:
