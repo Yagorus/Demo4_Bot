@@ -1,4 +1,4 @@
-/*
+
 terraform {
     source = "../../../modules//codebuild"
 }
@@ -36,4 +36,3 @@ inputs = {
   }
 }
 
-*/
