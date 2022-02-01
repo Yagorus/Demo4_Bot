@@ -33,6 +33,5 @@ inputs = merge(local.secrets.inputs,
   {
     vpc_id = dependency.cluster.outputs.vpc_id
     subnets = dependency.cluster.outputs.subnets
-    build_spec_file = "providers/dev/buildspec.yml"
   }
 )
