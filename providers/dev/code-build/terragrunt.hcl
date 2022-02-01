@@ -20,17 +20,18 @@ dependency "cluster" {
       
   }
 }
-
-dependency "ecr" {
-    config_path = "../ecr"
-    mock_outputs = {
-      ecr_repository_url = "000000000000.dkr.ecr.eu-west-1.amazonaws.com/image"
-  }
-  inputs = merge(local.secrets.inputs,
+  inputs = {
+    merge(local.secrets.inputs,
     {
       vpc_id = dependency.cluster.outputs.vpc_id
       subnets = dependency.cluster.outputs.subnets
     }
   )
+  }
+dependency "ecr" {
+    config_path = "../ecr"
+    mock_outputs = {
+      ecr_repository_url = "000000000000.dkr.ecr.eu-west-1.amazonaws.com/image"
+  }
 }
 
