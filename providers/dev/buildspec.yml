@@ -25,9 +25,9 @@ phases:
       - cd "${CODEBUILD_SRC_DIR}/app"
       - export TAG="${CODEBUILD_BUILD_NUMBER}-${ENV}"
       - make build
-  
+
   post_build:
     commands:
       - cd "${CODEBUILD_SRC_DIR}/providers/dev/cluster"
-      - terragrunt plan -var="image_version=${TAG}" 
-      - terragrunt apply -var="image_version=${TAG}" -auto-approve
+      - terragrunt plan -var="image_tag=${TAG}" 
+      - terragrunt apply -var="image_tag=${TAG}" -auto-approve
