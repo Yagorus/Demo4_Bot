@@ -1,15 +1,15 @@
 resource "aws_codebuild_source_credential" "github_token" {
   auth_type = "PERSONAL_ACCESS_TOKEN"
   server_type = "GITHUB"
-  token = var.token_git
+  token = ""
 }
 
 resource "aws_codebuild_project" "project" {
   depends_on = [aws_codebuild_source_credential.github_token]
   name = "${var.app_name}-${var.environment}-code-build-project"
   description = "test"
-  build_timeout = "10"
-  service_role = aws_iam_role.code_build_role.arn
+  build_timeout = "60"
+  service_role = aws_iam_role.codebuild_role.arn
 
   artifacts {
     type = "NO_ARTIFACTS"
@@ -26,8 +26,8 @@ resource "aws_codebuild_project" "project" {
     privileged_mode = true
 
     environment_variable {
-      name = "deploy"
-      value = "true"
+      name = "provider"
+      value = var.environment
     }
   }
 
