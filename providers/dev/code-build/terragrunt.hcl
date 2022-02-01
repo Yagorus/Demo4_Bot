@@ -23,7 +23,7 @@ dependency "cluster" {
 }
 
   inputs ={
-    token_git = locals.secrets.inputs.token_git
+    token_git = local.secrets.locals.token_git
     vpc_id = dependency.cluster.outputs.vpc_id
     subnets = dependency.cluster.outputs.subnets
   } 
