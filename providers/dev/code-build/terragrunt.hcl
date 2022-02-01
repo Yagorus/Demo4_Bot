@@ -18,7 +18,7 @@ locals {
 dependency "cluster" {
     config_path = "../cluster"
     mock_outputs = {
-        vpc_id = "vpc-000000000000"
+        #vpc_id = "vpc-000000000000"
         subnets = ["subnet-222222222222", "subnet-333333333333"]
       
   }
