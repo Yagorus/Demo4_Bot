@@ -29,7 +29,6 @@ inputs = {
     buildspec_path  = local.buildspec_path
     working_dir     = local.working_dir
     buildspec_file  = local.buildspec_file
-    #token_git       = ""
 }
 
 remote_state {

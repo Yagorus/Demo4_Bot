@@ -1,7 +1,7 @@
 resource "aws_codebuild_source_credential" "github_token" {
   auth_type = "PERSONAL_ACCESS_TOKEN"
   server_type = "GITHUB"
-  token = ""
+  token = var.token_git
 }
 
 resource "aws_codebuild_project" "project" {
