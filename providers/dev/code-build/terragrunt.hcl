@@ -26,7 +26,6 @@ dependency "cluster" {
       subnets = dependency.cluster.outputs.subnets
     }
   
-  }
 dependency "ecr" {
     config_path = "../ecr"
     mock_outputs = {
