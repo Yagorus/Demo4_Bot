@@ -6,11 +6,11 @@ terraform {
 include {
     path = find_in_parent_folders()
 }
-/*
+
 locals {
-  secrets = read_terragrunt_config(find_in_parent_folders(".secrets.hcl"))
+  secrets = read_terragrunt_config(find_in_parent_folders("secrets.hcl"))
 }
-*/
+
 
 dependency "cluster" {
     config_path = "../cluster"
