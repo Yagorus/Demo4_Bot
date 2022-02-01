@@ -8,7 +8,8 @@ include {
 }
 
 locals {
-  secrets = "../../../modules/codebuild/secrets.hcl"
+  #secrets = "../../../modules/codebuild/secrets.hcl"
+  secrets = read_terragrunt_config(find_in_parent_folders("secrets.hcl"))
 }
 
 
@@ -20,13 +21,14 @@ dependency "cluster" {
       
   }
 }
-  inputs = {
-      merge(local.secrets.inputs.token_git,
-      {
-        vpc_id = dependency.cluster.outputs.vpc_id
+
+  inputs = merge(
+  local.secrets.inputs,
+  {
+    vpc_id = dependency.cluster.outputs.vpc_id
         subnets = dependency.cluster.outputs.subnets
-      })
-    }
+  }
+)
   
 dependency "ecr" {
     config_path = "../ecr"
