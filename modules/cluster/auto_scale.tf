@@ -13,20 +13,14 @@ resource "aws_launch_configuration" "ecs_ec2_launch_config" {
 resource "aws_autoscaling_group" "autoscale" {
     name                      = "${var.app_name}-${var.environment}-auto-asg"
     depends_on                = [aws_launch_configuration.ecs_ec2_launch_config]
-    vpc_zone_identifier       = [for subnet in aws_subnet.public : subnet.id]
+    vpc_zone_identifier       = [for subnet in aws_subnet.private : subnet.id]
     launch_configuration      = aws_launch_configuration.ecs_ec2_launch_config.name
     target_group_arns         = [aws_alb_target_group.target_group.arn]
-    suspended_processes       = ["Launch", "Terminate", "HealthCheck", "ReplaceUnhealthy", "AZRebalance", "AlarmNotification", "ScheduledActions", "AddToLoadBalancer"]
     min_size                  = var.az_count
     max_size                  = var.az_count*3
     
-    protect_from_scale_in     = false
     health_check_grace_period = 20
     health_check_type         = "EC2"
-
-    lifecycle {
-    create_before_destroy = true
-     }
 
      tag {
     key                 = "Name"

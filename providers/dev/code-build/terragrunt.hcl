@@ -1,3 +1,4 @@
+/*
 terraform {
     source = "../../../modules//codebuild"
 }
@@ -6,6 +7,9 @@ include {
     path = find_in_parent_folders()
 }
 
+locals {
+  secrets = read_terragrunt_config(find_in_parent_folders(".secrets.hcl"))
+}
 
 dependency "cluster" {
     config_path = "../cluster"
@@ -24,7 +28,12 @@ dependency "ecr" {
 }
 
 inputs = {
+    local.secrets.inputs,
+  {
     vpc_id = dependency.cluster.outputs.vpc_id
     subnets = dependency.cluster.outputs.subnets
     ecr_repository_url = dependency.ecr.outputs.ecr_repository_url
+  }
 }
+
+*/
