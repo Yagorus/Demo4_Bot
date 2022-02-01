@@ -28,12 +28,12 @@ dependency "ecr" {
   }
 }
 
-inputs = {
+
+inputs = merge(
   local.secrets.inputs,
   {
     vpc_id = dependency.cluster.outputs.vpc_id
     subnets = dependency.cluster.outputs.subnets
-    ecr_repository_url = dependency.ecr.outputs.ecr_repository_url
+    build_spec_file = "providers/dev/buildspec.yml"
   }
-}
-
+)
