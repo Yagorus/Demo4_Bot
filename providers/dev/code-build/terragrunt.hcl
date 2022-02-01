@@ -8,7 +8,7 @@ include {
 }
 
 locals {
-  secrets = read_terragrunt_config(find_in_parent_folders("secrets.hcl"))
+  secrets = "../../../modules/codebuild/secrets.hcl"
 }
 
 
@@ -29,8 +29,7 @@ dependency "ecr" {
 }
 
 
-inputs = merge(
-  local.secrets.inputs,
+inputs = merge(local.secrets.inputs,
   {
     vpc_id = dependency.cluster.outputs.vpc_id
     subnets = dependency.cluster.outputs.subnets
