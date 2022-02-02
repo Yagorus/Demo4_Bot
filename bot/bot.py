@@ -1,29 +1,20 @@
-#!venv/bin/python
 import logging
-from aiogram import Bot, Dispatcher, executor, types
-from os import getenv
-from sys import exit
 import requests
+from aiogram import types, Dispatcher, Bot
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-import psycopg2
+from aiogram.utils import executor
+
+from db_file import SQLighter
 #from config import API_KEY, BOT_TOKEN
-#4
-"""
-conn = psycopg2.connect(host="localhost", port=5432, database="bot", user="postgres", password="123")
-cur = conn.cursor()
-print("Database opened successfully")
-"""
 API_KEY = getenv("API_KEY")
 BOT_TOKEN = getenv("BOT_TOKEN")
-#if not bot_token:
-#    exit("Error: no token provided")
-
 bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot, storage=MemoryStorage())
 logging.basicConfig(level=logging.INFO)
 api_link_ria = 'https://developers.ria.com/auto/search?api_key=' + API_KEY + "&category_id=1"
+db = SQLighter('./db.db')
 
 
 class ChooseCar(StatesGroup):
@@ -37,6 +28,33 @@ popular_cars = ['Kia', 'BMW', 'Nissan', 'Audi', 'Chevrolet', 'Ford', 'Honda', 'H
                 'Lexus', 'Mazda', 'Mercedes-Benz', 'Mitsubishi', 'Opel', 'Peugeot', 'Renault', 'Skoda', 'Toyota']
 
 
+# subscription activation
+@dp.message_handler(commands=['subscribe'])
+async def subscribe(message: types.Message):
+    if (not db.subscriber_exists(message.from_user.id)):
+        # если юзера нет в базе, добавляем его
+        db.add_subscriber(message.from_user.id)
+    else:
+        # если он уже есть, то просто обновляем ему статус подписки
+        db.update_subscription(message.from_user.id, True)
+
+    await message.answer(
+        "Вы успешно подписались на рассылку!\nЖдите, скоро выйдут новые обзоры и вы узнаете о них первыми =)")
+
+
+# unsubscription
+@dp.message_handler(commands=['unsubscribe'])
+async def unsubscribe(message: types.Message):
+    if not db.subscriber_exists(message.from_user.id):
+        # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
+        db.add_subscriber(message.from_user.id, False)
+        await message.answer("Вы итак не подписаны.")
+    else:
+        # если он уже есть, то просто обновляем ему статус подписки
+        db.update_subscription(message.from_user.id, False)
+        await message.answer("Вы успешно отписаны от рассылки.")
+
+
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
     brands_api = 'https://developers.ria.com/auto/categories/1/marks?api_key=' + API_KEY
@@ -48,7 +66,7 @@ async def start(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
     keyboard.add(*popular_cars)
     keyboard.add(*buttons_list)
-    send_mess = f"<b> Привет {message.from_user.first_name} {message.from_user.last_name} " \
+    send_mess = f"<b> Привет {message.from_user.first_name} " \
                 f"</b>!\nКакая марка тебя интересует?"
     await bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=keyboard)
     await ChooseCar.waiting_for_brand_name.set()
@@ -132,7 +150,8 @@ async def model_ads(message: types.Message, state: FSMContext):
         model_id = get_model_id(brand_id, model_name)
         area_name = user_data['area_name']
         area_id = get_area_id(area_name)
-        model_search_api = api_link_ria + '&marka_id=' + str(brand_id) + "&model_id=" + str(model_id) + '&state[0]=' + str(area_id) + '&countpage=3' + '&page=2'
+        model_search_api = api_link_ria + '&marka_id=' + str(brand_id) + "&model_id=" + str(
+            model_id) + '&state[0]=' + str(area_id) + '&countpage=3' + '&page=2'
         model = requests.get(model_search_api).json()
         ads_id_list = model['result']['search_result']['ids']
         list_ads = []
@@ -187,5 +206,4 @@ def get_cars_ids(brand_id, model_id):
 
 
 if __name__ == "__main__":
-    # Запуск бота
     executor.start_polling(dp, skip_updates=True)
