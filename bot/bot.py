@@ -9,7 +9,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import psycopg2
 #from config import API_KEY, BOT_TOKEN
-
+#4
 """
 conn = psycopg2.connect(host="localhost", port=5432, database="bot", user="postgres", password="123")
 cur = conn.cursor()
