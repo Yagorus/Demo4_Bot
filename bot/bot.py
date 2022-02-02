@@ -1,15 +1,17 @@
 import logging
 import requests
+import os
 from aiogram import types, Dispatcher, Bot
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
-
 from db_file import SQLighter
 #from config import API_KEY, BOT_TOKEN
-API_KEY = getenv("API_KEY")
-BOT_TOKEN = getenv("BOT_TOKEN")
+
+API_KEY = os.getenv("API_KEY")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+
 bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot, storage=MemoryStorage())
 logging.basicConfig(level=logging.INFO)
