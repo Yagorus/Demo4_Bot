@@ -11,8 +11,16 @@ dependency "ecr" {
   skip_outputs = true
 }
 
-inputs = {
-  working_dir = format("%s/../../../bot", get_terragrunt_dir())
-  ssm_parameter_token_name = dependency.ecr.outputs.ssm_parameter_token_name
-  ssm_parameter_key_name = dependency.ecr.outputs.ssm_parameter_key_name
+inputs = merge(
+    local.secrets.inputs,
+  {
+    working_dir = format("%s/../../../bot", get_terragrunt_dir())
+  }
+)
+
+
+locals {
+  #file secrets.hcl is placed in /module/code-build/ folder
+  #secrets = read_terragrunt_config("../../../modules/ecr/secrets.hcl")
+  secrets = read_terragrunt_config(find_in_parent_folders("secrets.hcl"))
 }
