@@ -7,7 +7,7 @@ resource "aws_ssm_parameter" "token" {
   type  = "String"
   value = var.bot_token
   tags = {
-    Name = "${var.app_name}-${environment}-token"
+    Name = "${var.app_name}-${var.environment}-token"
   }
 }
 
@@ -16,6 +16,6 @@ resource "aws_ssm_parameter" "key" {
   type  = "String"
   value = var.bot_key
   tags = {
-    Name = "${var.app_name}-${environment}-key"
+    Name = "${var.app_name}-${var.environment}-key"
   }
 }
