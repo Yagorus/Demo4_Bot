@@ -61,6 +61,7 @@ async def unsubscribe(message: types.Message):
 async def start(message: types.Message):
     brands_api = 'https://developers.ria.com/auto/categories/1/marks?api_key=' + API_KEY
     brands_list = requests.get(brands_api).json()
+    print(brands_list)
     buttons_list = []
     for i in range(len(brands_list)):
         brand = brands_list[i]['name']
