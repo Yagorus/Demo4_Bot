@@ -12,5 +12,7 @@ dependency "ecr" {
 }
 
 inputs = {
-  working_dir = format("%s/../../../app-test", get_terragrunt_dir())
+  working_dir = format("%s/../../../bot", get_terragrunt_dir())
+  ssm_parameter_token_name = dependency.ecr.outputs.ssm_parameter_token_name
+  ssm_parameter_key_name = dependency.ecr.outputs.ssm_parameter_key_name
 }
